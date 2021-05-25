@@ -1,0 +1,10 @@
+venv/
+korean-single-speaker/kss/1
+korean-single-speaker/kss/2
+korean-single-speaker/kss/3
+korean-single-speaker/kss/4
+
+*.wav
+*.zip
+*.pickle
+
