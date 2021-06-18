@@ -1,0 +1,124 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 1.0637641723356008 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "char" 
+        xmin = 0 
+        xmax = 1.0637641723356008 
+        intervals: size = 16 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.09287981859410431 
+            text = "0" 
+        intervals [2]:
+            xmin = 0.09287981859410431 
+            xmax = 0.1431371458380702 
+            text = "ᄀ" 
+        intervals [3]:
+            xmin = 0.1431371458380702 
+            xmax = 0.24151887056540958 
+            text = "ᅳ" 
+        intervals [4]:
+            xmin = 0.24151887056540958 
+            xmax = 0.3357211588128971 
+            text = "애" 
+        intervals [5]:
+            xmin = 0.3357211588128971 
+            xmax = 0.35845804988662133 
+            text = "0" 
+        intervals [6]:
+            xmin = 0.35845804988662133 
+            xmax = 0.4176113168489461 
+            text = "ᄌ" 
+        intervals [7]:
+            xmin = 0.4176113168489461 
+            xmax = 0.5168886114557539 
+            text = "ᅥ" 
+        intervals [8]:
+            xmin = 0.5168886114557539 
+            xmax = 0.5692894324532484 
+            text = "ᆫ" 
+        intervals [9]:
+            xmin = 0.5692894324532484 
+            xmax = 0.6785359951377273 
+            text = "~ᆫ화" 
+        intervals [10]:
+            xmin = 0.6785359951377273 
+            xmax = 0.7105800865832663 
+            text = "ᄇ" 
+        intervals [11]:
+            xmin = 0.7105800865832663 
+            xmax = 0.800303499282306 
+            text = "ᅥ" 
+        intervals [12]:
+            xmin = 0.800303499282306 
+            xmax = 0.8491129008886124 
+            text = "ᆫ" 
+        intervals [13]:
+            xmin = 0.8491129008886124 
+            xmax = 0.8933500013405694 
+            text = "~ᆫ호" 
+        intervals [14]:
+            xmin = 0.8933500013405694 
+            xmax = 1.006335039554175 
+            text = "아" 
+        intervals [15]:
+            xmin = 1.006335039554175 
+            xmax = 1.06033524164156 
+            text = "ᆯ" 
+        intervals [16]:
+            xmin = 1.06033524164156 
+            xmax = 1.0637641723356008 
+            text = "0" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "syl" 
+        xmin = 0 
+        xmax = 1.0637641723356008 
+        intervals: size = 10 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.09287981859410431 
+            text = "0" 
+        intervals [2]:
+            xmin = 0.09287981859410431 
+            xmax = 0.24151887056540958 
+            text = "그" 
+        intervals [3]:
+            xmin = 0.24151887056540958 
+            xmax = 0.33563984807023645 
+            text = "애" 
+        intervals [4]:
+            xmin = 0.33563984807023645 
+            xmax = 0.35845804988662133 
+            text = "0" 
+        intervals [5]:
+            xmin = 0.35845804988662133 
+            xmax = 0.5692894324532484 
+            text = "전" 
+        intervals [6]:
+            xmin = 0.5692894324532484 
+            xmax = 0.6785359951377273 
+            text = "~ᆫ화" 
+        intervals [7]:
+            xmin = 0.6785359951377273 
+            xmax = 0.8491129008886124 
+            text = "번" 
+        intervals [8]:
+            xmin = 0.8491129008886124 
+            xmax = 0.8933500013405694 
+            text = "~ᆫ호" 
+        intervals [9]:
+            xmin = 0.8933500013405694 
+            xmax = 1.06033524164156 
+            text = "알" 
+        intervals [10]:
+            xmin = 1.06033524164156 
+            xmax = 1.0637641723356008 
+            text = "0" 
