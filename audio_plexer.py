@@ -14,13 +14,15 @@ class AudioPlexer:
     # if sample rate is not provided, use the first wav file's sample rate.
 
     # PERFORMANCE NOTE: We're storing the raw wav file
-    def __init__(self, audio_paths, sr=None, n_fft=256, n_hops=4):
+    def __init__(self, audio_paths, sr=None, n_fft=256, n_hops=4, sliding_window_size=64, sliding_offset=0):
         self.log = Log.set(self.__class__.__name__)
         self.audio_paths = audio_paths
         self.sr = sr
         self.n_fft = n_fft
         self.n_hops = n_hops
         self.hop_length = math.ceil(self.n_fft/self.n_hops)
+        self.sliding_window_size = sliding_window_size
+        self.sliding_offset = sliding_offset
 
         # validate all files have the same sample rate
         for fn in self.audio_paths:
@@ -46,14 +48,16 @@ class AudioPlexer:
     def val_from_interval(self, df, ivl_cols=None, val_col='value', missing_val=None):
         if ivl_cols is None:
             ivl_cols = ['start', 'stop']
-        a_dfs = [self.df_per_audio(df, a.path, val_col='syl') for a in self.audios]
-        kw = {'ivl_cols':ivl_cols, 'val_col':val_col, 'missing_val':missing_val}
-        return np.concatenate([a.val_from_interval(a_df , **kw) for (a_df, a) in zip(a_dfs, self.audios)])
+        a_dfs = [self.df_per_audio(df, a.path, val_col=val_col) for a in self.audios]
+        kw = {'ivl_cols': ivl_cols, 'missing_val': missing_val}
+        return np.concatenate([a.val_from_interval(a_df, **kw) for (a_df, a) in zip(a_dfs, self.audios)])
 
     def df_per_audio(self, full_a_df, audio_path, val_col='syl'):
-        a_df = full_a_df.loc[full_a_df['audio'] == audio_path,['start', 'stop', val_col, 'audio']]
-        a_df['value'] = a_df[val_col] != '0'
-        return a_df
+        df_for_audio_path = full_a_df.loc[full_a_df['audio'] == audio_path]
+        df_for_audio_path.reindex(['start', 'stop', val_col, 'audio'])
+        # TODO: Figure out how to pass the condition as an argument
+        df_for_audio_path['value'] = df_for_audio_path[val_col] != '0'
+        return df_for_audio_path
 
     def to_rms(self, x):
         rms = librosa.feature.rms(y=x, frame_length=self.n_fft, hop_length=self.hop_length)
@@ -66,16 +70,24 @@ class AudioPlexer:
     #  y5, [x2, x3, x4, x5, x6]
     #  ...
     #  y999, [x996, x997, x998, x999, x1000]
-    def sliding_window_features(self, X, y, window, offset=0):
+    def sliding_window_features(self, X, y=None, window=None, offset=None):
+        if window is None:
+            window = self.sliding_window_size
+        if offset is None:
+            offset = self.sliding_offset
+
         axis = len(X.shape) - 1
         # we will need to reduce (by slicing) X to match y when we are done
         slc_a = [slice(None)] * (axis + 1)
         x_ = sliding_window_view(X, window, axis=axis)
 
-        # match y with the correct x
-        y_ = y.flatten()[offset:x_.shape[axis]]
-        slc_a[axis] = slice(0, y_.shape[0])
-        slc = tuple(slc_a)
+        y_ = None
 
+        # match y with the correct x
+        if y is not None:
+            y_ = y.flatten()[offset:x_.shape[axis]]
+            slc_a[axis] = slice(0, y_.shape[0])
+
+        slc = tuple(slc_a)
         # return same shape
         return x_[slc], y_

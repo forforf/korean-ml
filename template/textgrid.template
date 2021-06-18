@@ -1,0 +1,9 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = ${textgrid_xmin}
+xmax = ${textgrid_xmax}
+tiers? <exists>
+size = ${textgrid_size}
+item []:
+${textgrid__item_list}

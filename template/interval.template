@@ -1,0 +1,4 @@
+       intervals [${ivl_id}]:
+          xmin = ${ivl_xmin}
+          xmax = ${ivl_xmax}
+          text = "${ivl_text}"

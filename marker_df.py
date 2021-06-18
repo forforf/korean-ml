@@ -1,5 +1,4 @@
 import pandas as pd
-from IPython.display import display
 
 
 class MarkerDf:
@@ -13,9 +12,6 @@ class MarkerDf:
 
     def intervals(self):
         return self.df['stop'] - self.df['start']
-
-    def display(self):
-        display(self.df)
 
     def audio_files(self):
         return self.df['audio'].unique()

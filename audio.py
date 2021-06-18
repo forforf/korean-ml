@@ -6,7 +6,7 @@ from log import Log
 
 class Audio:
 
-    def __init__(self, path, sr=None, n_fft=256, n_hops=4):
+    def __init__(self, path, sr=None, n_fft=256, n_hops=4, n_mfcc=8):
         self.log = Log.set(self.__class__.__name__)
         self.n_fft = n_fft
         self.n_hops = n_hops
@@ -24,7 +24,7 @@ class Audio:
         # if memory performance becomes a constraint we can skip setting the wav in the constructor
         # and move it into a method instead
         self.wav = librosa.util.normalize(wav_)
-        self.mfcc = librosa.feature.mfcc(y=self.wav, sr=sr_, n_mfcc=12, n_fft=n_fft, hop_length=self.hop_length)
+        self.mfcc = librosa.feature.mfcc(y=self.wav, sr=sr_, n_mfcc=n_mfcc, n_fft=n_fft, hop_length=self.hop_length)
         self.rms = self.to_rms(self.wav)
         self.sr = sr_
         self.size = len(self.wav)
@@ -38,6 +38,7 @@ class Audio:
         return librosa.util.normalize(rms, axis=1)
 
     # Return numpy array matching audio size
+    # val_col here must point to a valid type (i.e., boolean)
     def val_from_interval(self, df, ivl_cols=None, val_col='value', missing_val=None):
         if ivl_cols is None:
             ivl_cols = ['start', 'stop']

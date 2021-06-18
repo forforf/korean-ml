@@ -1,0 +1,6 @@
+        class = "IntervalTier"
+        name = "${item_name}"
+        xmin = ${item_xmin}
+        xmax = ${item_xmax}
+        intervals: size = ${item__intervals_size}
+${item__intervals}
