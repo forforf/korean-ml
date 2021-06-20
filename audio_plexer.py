@@ -35,6 +35,22 @@ class AudioPlexer:
         self.audios = [Audio(f, sr=self.sr, n_fft=self.n_fft, n_hops=n_hops) for f in self.audio_paths]
         self.size = sum([a.size for a in self.audios])
 
+    # So brittle it hurts
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            audio_paths_eq = np.array_equal(self.audio_paths, other.audio_paths) if isinstance(self.audio_paths, np.ndarray) else self.audio_paths == other.audio_paths
+            return (audio_paths_eq and
+                    self.sr == other.sr and
+                    self.n_fft == other.n_fft and
+                    self.n_hops == other.n_hops and
+                    self.sliding_window_size == other.sliding_window_size and
+                    self.sliding_offset == other.sliding_offset)
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def wav(self):
         return np.concatenate([a.wav for a in self.audios])
 
@@ -51,6 +67,15 @@ class AudioPlexer:
         a_dfs = [self.df_per_audio(df, a.path, val_col=val_col) for a in self.audios]
         kw = {'ivl_cols': ivl_cols, 'missing_val': missing_val}
         return np.concatenate([a.val_from_interval(a_df, **kw) for (a_df, a) in zip(a_dfs, self.audios)])
+
+    # TODO: Align with audio class, on fix for speech boolean test.
+    def speech_from_interval(self, df, ivl_cols=None, missing_val=None):
+        if ivl_cols is None:
+            ivl_cols = ['start', 'stop']
+        a_dfs = [df.loc[df['audio'] == a.path] for a in self.audios]
+        kw = {'ivl_cols': ivl_cols, 'missing_val': missing_val}
+        return np.concatenate([a.speech_from_interval(a_df, **kw) for (a_df, a) in zip(a_dfs, self.audios)])
+
 
     def df_per_audio(self, full_a_df, audio_path, val_col='syl'):
         df_for_audio_path = full_a_df.loc[full_a_df['audio'] == audio_path]

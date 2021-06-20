@@ -34,7 +34,7 @@ class Audio:
 
     def to_rms(self, x):
         rms = librosa.feature.rms(y=x, frame_length=self.n_fft, hop_length=self.hop_length)
-        print(f'a.to_rms size: {rms.shape[1]}, reduced {(len(x)/self.n_fft)*self.n_hops}')
+        self.log.info(f'a.to_rms size: {rms.shape[1]}, reduced {(len(x)/self.n_fft)*self.n_hops}')
         return librosa.util.normalize(rms, axis=1)
 
     # Return numpy array matching audio size
@@ -48,3 +48,10 @@ class Audio:
         for (start, stop, val) in ivl_df.values:
             vals[start:stop] = val
         return vals
+
+    # TODO: Figure out a way to make this more flexible and not tightly coupled to 'syl' column
+    def speech_from_interval(self, df, **kwargs):
+        assert('syl' in df.columns, 'Dataframe must have column named: \'syl\'')
+        df['value'] = np.where(df['syl'] == '0', False, True)
+        return self.val_from_interval(df, **kwargs)
+

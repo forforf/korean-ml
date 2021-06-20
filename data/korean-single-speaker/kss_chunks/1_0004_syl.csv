@@ -1,0 +1,12 @@
+syl,start,stop,audio
+0,0.0,0.09288,data/korean-single-speaker/kss/1/1_0004.wav
+그,0.09288,0.24152,data/korean-single-speaker/kss/1/1_0004.wav
+애,0.24152,0.33564,data/korean-single-speaker/kss/1/1_0004.wav
+0,0.33564,0.35846,data/korean-single-speaker/kss/1/1_0004.wav
+전,0.35846,0.56929,data/korean-single-speaker/kss/1/1_0004.wav
+~ᆫ화,0.56929,0.67854,data/korean-single-speaker/kss/1/1_0004.wav
+번,0.67854,0.84911,data/korean-single-speaker/kss/1/1_0004.wav
+~ᆫ호,0.84911,0.89335,data/korean-single-speaker/kss/1/1_0004.wav
+알,0.89335,1.07737,data/korean-single-speaker/kss/1/1_0004.wav
+아?,1.07737,1.27282,data/korean-single-speaker/kss/1/1_0004.wav
+0,1.27282,1.332,data/korean-single-speaker/kss/1/1_0004.wav

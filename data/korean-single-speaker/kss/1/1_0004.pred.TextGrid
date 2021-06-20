@@ -2,41 +2,51 @@ File type = "ooTextFile"
 Object class = "TextGrid"
 
 xmin = 0.0
-xmax = 1.0637641723356008
+xmax = 1.062312925170068
 tiers? <exists>
-size = 1
+size = 2
 item []:
     item [1]:
         class = "IntervalTier"
-        name = "syl"
+        name = "char"
         xmin = 0.0
-        xmax = 1.0637641723356008
-        intervals: size = 7
+        xmax = 1.062312925170068
+        intervals: size = 4
        intervals [1]:
           xmin = 0.0
           xmax = 0.09287981859410431
           text = ""
        intervals [2]:
           xmin = 0.09287981859410431
-          xmax = 0.31492063492063493
+          xmax = 0.33668934240362813
           text = ""
        intervals [3]:
-          xmin = 0.31492063492063493
+          xmin = 0.33668934240362813
           xmax = 0.35845804988662133
           text = ""
        intervals [4]:
           xmin = 0.35845804988662133
-          xmax = 0.5006802721088436
+          xmax = 1.062312925170068
           text = ""
-       intervals [5]:
-          xmin = 0.5006802721088436
-          xmax = 0.5021315192743764
+    item [2]:
+        class = "IntervalTier"
+        name = "syl"
+        xmin = 0.0
+        xmax = 1.062312925170068
+        intervals: size = 4
+       intervals [1]:
+          xmin = 0.0
+          xmax = 0.09287981859410431
           text = ""
-       intervals [6]:
-          xmin = 0.5021315192743764
-          xmax = 1.0216780045351475
+       intervals [2]:
+          xmin = 0.09287981859410431
+          xmax = 0.33668934240362813
           text = ""
-       intervals [7]:
-          xmin = 1.0216780045351475
-          xmax = 1.0637641723356008
+       intervals [3]:
+          xmin = 0.33668934240362813
+          xmax = 0.35845804988662133
+          text = ""
+       intervals [4]:
+          xmin = 0.35845804988662133
+          xmax = 1.062312925170068
           text = ""
