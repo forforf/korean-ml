@@ -31,6 +31,7 @@ class FilenameVersioner:
 
     # def parse_version(self, fn):
 
+    # TODO: Rename this method to something better as it's used to get the base name and version, not underlying data
     def get_latest_data(self, search=None):
         search_str = search or f'{self.base_dir}/{self.filename_format()}'
         versions = glob.glob(search_str)

@@ -17,11 +17,12 @@ class Disp:
         self.obj(idisplay.Audio(f), **kwargs)
 
     def audio_raw(self, wav, sr, **kwargs):
+        print(kwargs)
         self.obj(idisplay.Audio(wav, rate=sr), **kwargs)
 
     def audio(self, filename=None, data=None, rate=None, **kwargs):
         if filename is None:
-            self.audio_raw(data, rate)
+            self.audio_raw(data, rate, **kwargs)
         else:
             self.audio_file(filename, **kwargs)
 

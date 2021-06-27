@@ -10,7 +10,7 @@ class KssChunkType(Enum):
 
 
 class KssChunk:
-    DIR='data/korean-single-speaker/kss_chunks'
+    DIR = '.data/korean-single-speaker/kss_chunks'
 
     @staticmethod
     def get_df_from_kss_files(dir, type):

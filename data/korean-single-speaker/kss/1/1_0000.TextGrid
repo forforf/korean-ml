@@ -8,7 +8,7 @@ size = 2
 item []:
     item [1]:
         class = "IntervalTier"
-        name = "Character"
+        name = "char"
         xmin = 0
         xmax = 3.526530612244898
         intervals: size = 48
@@ -206,7 +206,7 @@ item []:
             text = "0"
     item [2]:
         class = "IntervalTier"
-        name = "Syllable"
+        name = "syl"
         xmin = 0
         xmax = 3.526530612244898
         intervals: size = 24
@@ -265,7 +265,7 @@ item []:
         intervals [14]:
             xmin = 1.5481864034453268
             xmax = 1.7360865873374114
-            text = "고"
+            text = "고"
         intervals [15]:
             xmin = 1.7360865873374114
             xmax = 2.048692126402934
