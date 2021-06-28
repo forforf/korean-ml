@@ -20,7 +20,6 @@ class Audio:
             self.log.warning(f'Modifying input wav from size {len(wav_)} to {nice_size}')
             self.log.info(f'change in number of samples: {delta} [should be less than hop length: {self.hop_length}]')
             assert delta <= self.hop_length
-        # wav_ = wav_[0:nice_size-1]
         wav_ = np.pad(wav_, (0, delta), 'constant')
 
         # if memory performance becomes a constraint we can skip setting the wav in the constructor

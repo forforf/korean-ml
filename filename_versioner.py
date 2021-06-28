@@ -8,6 +8,9 @@ import os
 # Rotates across version numbers
 # saves the version after the filename but before the file extension
 class FilenameVersioner:
+    """
+    Container for saving versioned files
+    """
 
     def __init__(self, filename_ext_pair, base_dir='.', max_versions=16):
         self.base_name, self.ext_name = filename_ext_pair
@@ -28,8 +31,6 @@ class FilenameVersioner:
 
     def fn_regex(self):
         return self.filename_regex(self.base_name, self.ext_name)
-
-    # def parse_version(self, fn):
 
     # TODO: Rename this method to something better as it's used to get the base name and version, not underlying data
     def get_latest_data(self, search=None):
@@ -64,14 +65,3 @@ class FilenameVersioner:
             else:
                 version = start_version
         return f'{self.base_dir}/{self.base_name}.{version}.{self.ext_name}'
-
-
-# fv = FilenameVersioner(('svr_trained', 'joblib'), base_dir='./data/model/')
-# print(fv.get_latest())
-# print(fv.increment_version_number('F'))
-# print(fv.increment_version())
-
-# latest_file = max(list_of_files, key=os.path.getctime)
-
-# files = glob.glob('*')
-# max(files, key=os.path.getmtime)

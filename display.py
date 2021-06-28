@@ -6,11 +6,9 @@ class Disp:
         self.display = display_fn
 
     def obj(self, obj, label='', **kwargs):
-        # noinspection PyUnresolvedReferences
         self.display(idisplay.Markdown(label), obj, **kwargs)
 
     def code(self, f, **kwargs):
-        # noinspection PyUnresolvedReferences
         self.obj(idisplay.Code(filename=f), **kwargs)
 
     def audio_file(self, f, **kwargs):
