@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
+from numpy import ndarray
 
 from audio import Audio
-from transformers import SlidingWindow
+# from transformers import SlidingWindow
 from kss_df import KssDfType
 
 
@@ -12,18 +13,19 @@ from kss_df import KssDfType
 class KssSpeech:
     #TODO: Figure out whether we use kss_id and derive df and audio, or pass them in.
     #TODO: Figure out if size and frame rate should be in constructor or not.
-    def __init__(self, df: pd.DataFrame, audio: Audio, sw: SlidingWindow):
+    # TODO: Deprecate is_speech (or speech_bools as they are the same)
+    def __init__(self, df: pd.DataFrame, audio: Audio):
         self.df = df
         self.audio = audio
-        self.sw = sw
+        # self.sw = sw
         audio_rms = self.audio.rms
         frame_rate = self.audio.sr / self.audio.hop_length
         speech_bools = self.speech_wav(len(audio_rms.squeeze()), frame_rate)
         self._speech_bools = speech_bools
-        self.sw.fit_transform(audio.rms, speech_bools)
-        self.rms = audio_rms.squeeze()
-        self.features = self.sw.X
-        self.is_speech = self.sw.y
+        # self.sw.fit_transform(audio.rms, speech_bools)
+        # self.rms = audio_rms.squeeze()
+        # self.is_speech = self.sw.y
+        self.is_speech = speech_bools
 
     def __eq__(self, o):
         if not isinstance(o, KssSpeech):
@@ -32,7 +34,7 @@ class KssSpeech:
         are_same = [
             self.df.equals(o.df),
             self.audio == o.audio,
-            self.sw == o.sw
+            # self.sw == o.sw
             ]
         return all(are_same)
 
@@ -52,7 +54,7 @@ class KssSpeech:
         sz = size if size else len(self.audio.wav)
         if ivl_cols is None:
             ivl_cols = ['start', 'stop']
-        vals = np.full(sz, missing_val)
+        vals: ndarray = np.full(sz, missing_val)
         ivl_df = (self.df.loc[:, ivl_cols] * fr).apply(np.ceil).astype(int)
         ivl_df[val_col] = self.df.loc[:, val_col]
         for (start, stop, val) in ivl_df.values:

@@ -20,12 +20,12 @@ class KssDf:
 
     def __init__(self, kss_id):
         self.log = Log.set(self.__class__.__name__)
-        subdir_id = re.search(r'(\d)_\d{4}', kss_id).group(1)
+        self.subdir_id = re.search(r'(\d)_\d{4}', kss_id).group(1)
         self.id = kss_id
         self.audio_filename = f'{self.id}.wav'
         self.tg_filename = f'{self.id}.TextGrid'
-        self.audio_path = f'{KssDf.TG_DIR}/{subdir_id}/{self.audio_filename}'
-        self.tg_path = f'{KssDf.TG_DIR}/{subdir_id}/{self.tg_filename}'
+        self.audio_path = f'{KssDf.TG_DIR}/{self.subdir_id}/{self.audio_filename}'
+        self.tg_path = f'{KssDf.TG_DIR}/{self.subdir_id}/{self.tg_filename}'
         self.csv_filenames = {}
         self.csv_paths = {}
         for kss_type in KssDfType:
@@ -59,3 +59,6 @@ class KssDf:
                 df.to_csv(save_path, mode='w', header=True, index=False)
 
         return df_dict
+
+    def tg_pred_path(self, data_version, tng_version):
+        return f'{KssDf.TG_DIR}/{self.subdir_id}/{self.id}.pred.{data_version}.{tng_version}.TextGrid'
