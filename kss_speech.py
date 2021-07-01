@@ -9,7 +9,6 @@ from kss_df import KssDfType
 
 # TODO: This does not check that the start/stop columns are matching to the right audio file
 #       It assumes there is only 1 audio file for the entire df.
-# TODO: We've mixed up fitting and tranforming in the init, so as is this is problematic for predictions
 class KssSpeech:
     #TODO: Figure out whether we use kss_id and derive df and audio, or pass them in.
     #TODO: Figure out if size and frame rate should be in constructor or not.
@@ -17,14 +16,11 @@ class KssSpeech:
     def __init__(self, df: pd.DataFrame, audio: Audio):
         self.df = df
         self.audio = audio
-        # self.sw = sw
         audio_rms = self.audio.rms
         frame_rate = self.audio.sr / self.audio.hop_length
         speech_bools = self.speech_wav(len(audio_rms.squeeze()), frame_rate)
         self._speech_bools = speech_bools
-        # self.sw.fit_transform(audio.rms, speech_bools)
-        # self.rms = audio_rms.squeeze()
-        # self.is_speech = self.sw.y
+        self.speech_flags = speech_bools
         self.is_speech = speech_bools
 
     def __eq__(self, o):
@@ -34,7 +30,6 @@ class KssSpeech:
         are_same = [
             self.df.equals(o.df),
             self.audio == o.audio,
-            # self.sw == o.sw
             ]
         return all(are_same)
 

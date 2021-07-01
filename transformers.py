@@ -27,7 +27,7 @@ class Transformer(BaseEstimator, TransformerMixin):
     def transform(self, X, y=None, **kwargs):
         self.log.warning('transform() from the base Transformer class called. This does nothing.')
         # TODO: use super transform
-        return self
+        return X.squeeze()
 
     # def fit_transform(self, X, y, **kwargs):
     #     return self.fit(X, y, **kwargs).transform(X, y, **kwargs)
@@ -177,13 +177,15 @@ class SlidingWindow(Transformer):
 
     # TODO: maybe allow padding, but passing the various pad arguments is kind of a pain
     # TDOD: PADDING IS BROKEN -- INVESTIGATE AND FIX
-    def __init__(self, window=1, offset=0, pad_X=True, axis=0):
+    def __init__(self, window=1, offset_percent=0.0, pad_X=True, axis=0):
         super().__init__()
+        self.log.debug(f'window: {window}, offset_percent: {offset_percent}')
         self.window = window
-        self.offset = offset
+        self.offset_percent = offset_percent
+        self.offset = math.floor(self.offset_percent*self.window)
         self.X = None
         self.y = None
-        self.pad_X =pad_X
+        self.pad_X = pad_X
         # TODO: Deprecate axis
         self.axis = axis
         # self.slicer will be used for slicing the X during the transform (after fitting)
@@ -199,7 +201,7 @@ class SlidingWindow(Transformer):
 
         are_same = [
             self.window == o.window,
-            self.offset == o.offset,
+            self.offset_percent == o.offset_percent,
             np.array_equal(self.X, o.X),
             np.array_equal(self.y, o.y),
             self.pad_X == o.pad_X,
@@ -221,6 +223,8 @@ class SlidingWindow(Transformer):
         :param axis: [Might get deprecated] axis to window on if X is multi-dimensional
         :return: self
         """
+        self.offset = math.floor(self.offset_percent*self.window)
+        self.log.debug(f'Fit: window: {self.window}, offset_percent: {self.offset_percent}, offset: {self.offset}')
         self.log.debug(f'Initial X shape: {X.shape}')
         # Note: If unpadded this will change the shape of x, reduces rows (axis=0) by self.window - 1
         # Also: For cases where offset > window, a padded y would be needed to fully cover the padded x

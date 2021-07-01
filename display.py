@@ -15,7 +15,6 @@ class Disp:
         self.obj(idisplay.Audio(f), **kwargs)
 
     def audio_raw(self, wav, sr, **kwargs):
-        print(kwargs)
         self.obj(idisplay.Audio(wav, rate=sr), **kwargs)
 
     def audio(self, filename=None, data=None, rate=None, **kwargs):
