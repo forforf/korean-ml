@@ -179,6 +179,7 @@ class SlidingWindow(Transformer):
     # TDOD: PADDING IS BROKEN -- INVESTIGATE AND FIX
     def __init__(self, window=1, offset_percent=0.0, pad_X=True, axis=0):
         super().__init__()
+        self.log.setLevel('INFO')
         self.log.debug(f'window: {window}, offset_percent: {offset_percent}')
         self.window = window
         self.offset_percent = offset_percent
@@ -277,7 +278,9 @@ class SlidingWindow(Transformer):
         #      that keep the proper shapes for down stream consumers
         # My stupid hack breaks if the offset is larger than window size
         if self.window <= self.offset:
-            self.log.warning('My stupid hack breaks if the offset is larger than window size')
+            self.log.warning(
+                f'Window size ({self.window}) is less than offset ({self.offset}). This may lead to bad results'
+            )
         if max(X.shape) != max(x_fit.shape):
             orig_shape = x_fit.shape
             x_fit_sqz = x_fit.squeeze()

@@ -8,3 +8,6 @@ class PipeWrap:
         self.params = [step[1].get_params() for step in steps]
         self.steps = steps
         self.pipe = Pipeline(steps=self.steps)
+
+    def predict(self, X):
+        return self.pipe.predict(X)

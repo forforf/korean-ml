@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from abc import ABC, abstractmethod
+from typing import Final
 from pipewrap import PipeWrap
 from transformers import SlidingWindow
 from scorers import conv_var
@@ -7,7 +9,63 @@ from sklearn.metrics import make_scorer
 from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
 from filename_versioner import FilenameVersioner
 import joblib
+import keras.models
 
+
+
+class Wrap(ABC):
+    MODEL_DIR: Final[str] = './data/model'
+    SW_WINDOW = 128
+    SW_OFFSET_PERCENT = 0.75
+
+    def __init__(self, model_name, model, training_version='0'):
+        self.model = model
+        self.model_name = model_name
+        self.model_file = f'{model_name}.{training_version}'
+        # TODO: Deprecate .sw, and pass the transformer into init
+        self.sw = SlidingWindow(window=128, offset_percent=0.75)
+        # self.transformer = transformer
+
+    def transform(self, X, y):
+        if y is None:
+            y = np.zeros(len(X))
+        self.sw.fit_transform(X, y)
+        print('swX, swy shapes', self.sw.X.shape, self.sw.y.shape)
+        y_sw = self.sw.y.astype('float32')
+        X_sw = self.sw.X.reshape(self.sw.X.shape[0],self.sw.X.shape[1],1)
+        return (X_sw, y_sw)
+
+    def fit(self, X, y, **kwargs):
+        print(f'fitting using model: {self.model}')
+        X_sw, y_sw = self.transform(X, y)
+        return self.model.fit(X_sw, y_sw, **kwargs)
+
+    def predict(self, X):
+        X_sw, _ = self.transform(X, None)
+        y_pred_cont = self.model.predict(X_sw).squeeze()
+        #TODO: Figure out better way to convert to boolean (and pass the threshold as a parameter)
+        threshold = 0.2
+        return (y_pred_cont > threshold).astype(float)
+
+    def save(self):
+        raise NotImplementedError
+
+
+class KerasWrap(Wrap):
+    FILE_EXT_NAME = 'keras'
+
+    def __init__(self, model_name, model, training_version='0'):
+        super(KerasWrap, self).__init__(model_name, model, training_version)
+        model_fv_tuple = (self.model_file, self.FILE_EXT_NAME)
+        self.fv = FilenameVersioner(model_fv_tuple, base_dir=self.MODEL_DIR, max_versions=3)
+
+    def save(self):
+        saved_model_path = self.fv.increment_version()
+        print(saved_model_path)
+        self.model.save(saved_model_path)
+
+        # return saved model
+        return keras.models.load_model(saved_model_path)
 
 class TrainingLoader:
     TRAINING_DATA_DIR = './data/model'
@@ -48,6 +106,7 @@ class ModelWrap:
     SHARED_PARAMS_NAME = 'shared_params'
 
     def __init__(self, model_name, model, model_params, training_version='0'):
+        self.model = model
         model_file = f'{model_name}.{training_version}'
         model_fv_tuple = (model_file, ModelWrap.FILE_EXT_NAME)
         self.fv = FilenameVersioner(model_fv_tuple, base_dir=ModelWrap.MODEL_DIR, max_versions=3)
@@ -65,10 +124,32 @@ class ModelWrap:
         pipe_params = (sw_params | model_params)
         tcsv = TimeSeriesSplit(n_splits=5)
         conv_score = make_scorer(conv_var)
+        # self.search = GridSearchCV(self.pw.pipe, pipe_params, n_jobs=-1, cv=tcsv, scoring='f1', verbose=4)
         self.search = GridSearchCV(self.pw.pipe, pipe_params, n_jobs=-1, cv=tcsv, scoring=conv_score, verbose=4)
 
+    # Need a better approach. Keras models don't pickle (but can be saved as json and their weights reloaded)
+    # One possible approach is to have a common interface for saving loading
+    # and separate implementations for sklearn pipelines and keras models.
+    # TODO: Better model wrappping.
+    # FIXME: model_fit might be breaking save versioning
+    def model_fit(self, X, y):
+        sw = SlidingWindow(window=128, offset_percent=0.75)
+
+        sw.fit_transform(X, y)
+
+        print('swX, swy shapes', sw.X.shape, sw.y.shape)
+        y_sw = sw.y.astype('float32')
+        X_sw = sw.X.reshape(sw.X.shape[0],sw.X.shape[1],1)
+        print(f'fitting using model: {self.model}')
+        self.model.fit(X_sw, y_sw)
+        print(f'setting pipeline model to use fitted model')
+        self.pw.pipe = self.model
+
+    # TODO: Rename to search_fit, and then rename 'model_fit' to 'fit'
     def fit(self, X, y):
+        print(f'fitting using grid search: {self.search}')
         self.search.fit(X, y)
+        print(f'setting pipeline model to use best estimator: {self.search.best_estimator_}')
         self.pw.pipe = self.search.best_estimator_
 
     def save(self):
