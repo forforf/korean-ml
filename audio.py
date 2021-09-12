@@ -73,4 +73,3 @@ class Audio:
         assert 'syl' in df.columns, 'Dataframe must have column named: \'syl\''
         df['value'] = np.where(df['syl'] == '0', False, True)
         return self.val_from_interval(df, **kwargs)
-

@@ -14,6 +14,7 @@ def base_typed(obj):
 
     if isinstance(obj, Iterable):
         base_items = [base_typed(item) for item in obj]
+        # noinspection PyCallingNonCallable
         return base_items if from_numpy else T(base_items)
 
     d = obj if T is dict else obj.__dict__

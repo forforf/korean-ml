@@ -4,7 +4,7 @@ from numpy import ndarray
 
 from audio import Audio
 # from transformers import SlidingWindow
-from kss_df import KssDfType
+from src.kss_df import KssDfType
 
 
 # TODO: This does not check that the start/stop columns are matching to the right audio file

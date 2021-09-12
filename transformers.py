@@ -1,6 +1,7 @@
 import math
 import librosa
 import numpy as np
+# noinspection PyProtectedMember
 from numpy.lib.stride_tricks import sliding_window_view
 from sklearn.base import BaseEstimator, TransformerMixin
 from log import Log
@@ -28,104 +29,6 @@ class Transformer(BaseEstimator, TransformerMixin):
         self.log.warning('transform() from the base Transformer class called. This does nothing.')
         # TODO: use super transform
         return X.squeeze()
-
-    # def fit_transform(self, X, y, **kwargs):
-    #     return self.fit(X, y, **kwargs).transform(X, y, **kwargs)
-
-
-# # # Probably doesn't belong as a transformer
-# # # Rather it might make more sense of this to encapsulate a pipeline
-# # # fn(kss_id, pipeline) -> y_bool
-# class KssIdWav(Transformer):
-#     WAVDIR = './data/korean-single-speaker/kss'
-#     CSVDIR = './data/korean-single-speaker/kss_chunks'
-#     EXT = 'wav'
-#
-#     """
-#     Transform a KSS file id into the wav
-#     kss_id = 1_1004
-#     -> loads the wav file at DIR/1/1_0004.wav
-#     """
-#
-#     @staticmethod
-#     def get_wav_filename(kss_id):
-#         subdir_id = re.search('(\d)_\d{4}', kss_id).group(1)
-#         return f'{KssIdWav.WAVDIR}/{subdir_id}/{kss_id}.{KssIdWav.EXT}'
-#
-#     @staticmethod
-#     def get_csv_filename(kss_id):
-#         return f'{KssIdWav.CSVDIR}/{kss_id}.csv'
-#
-#
-#     @staticmethod
-#     def get_normalized_wav(kss_id, sr):
-#         wav , sr = librosa.load(KssIdWav.get_wav_filename(kss_id), sr)
-#         return librosa.util.normalize(wav), sr
-#
-#     def __init__(self, sr=None):
-#         super().__init__()
-#         self.sr = sr
-#         self.X = None
-#         self.y = None
-#
-#     def transform_X(self, kss_ids, **kwargs):
-#         # splits wav, and sr into separate lists, note the * operator
-#         self.X, srs = zip(*[self.get_normalized_wav(id, self.sr) for id in kss_ids])
-#         uniq_srs = list(set(srs))
-#         assert len(uniq_srs) == 1, f'Multiple sample rates found {uniq_srs}, expected all wav to have same sample rate'
-#         if self.sr is None:
-#             self.sr = uniq_srs[0]
-#         else:
-#             assert uniq_srs[0] == self.sr, f'wav sample rate ({uniq_srs[0]}) did not match assigned sample rate: {self.sr}'
-#         return self
-#
-#     def fit_y(self, kss_ids, **kwargs):
-#         # turn kss_id into y_boolean
-#         # Optimization for future would be to combine the RMS step so that we don't need to have
-#         # arrays of sample_rate*t, but can use the much smaller RMS version
-#         filenames = [self.get_csv_filename(id) for id in kss_ids]
-#         dfs = [pd.read_csv(f) for f in filenames]
-#         pass
-#
-#     # # Return numpy array matching audio size
-#     # # val_col here must point to a valid type (i.e., boolean)
-#     # def val_from_interval(self, df, ivl_cols=None, val_col='value', missing_val=None):
-#     #     if ivl_cols is None:
-#     #         ivl_cols = ['start', 'stop']
-#     #     vals = np.full(self.size, missing_val)
-#     #     ivl_df = (df.loc[:, ivl_cols] * self.sr).apply(np.ceil).astype(int)
-#     #     ivl_df[val_col] = df.loc[:, val_col]
-#     #     for (start, stop, val) in ivl_df.values:
-#     #         vals[start:stop] = val
-#     #     return vals
-#     #
-#     # # TODO: Figure out a way to make this more flexible and not tightly coupled to 'syl' column
-#     # def speech_from_interval(self, df, **kwargs):
-#     #     assert('syl' in df.columns, 'Dataframe must have column named: \'syl\'')
-#     #     df['value'] = np.where(df['syl'] == '0', False, True)
-#     #     return self.val_from_interval(df, **kwargs)
-#
-#     # We run the X transform in fit, because we need to get the sample rates
-#     # and the sample rates are a by-product from getting the wav.
-#     # Since we got the wav, we go ahead and assign it to X
-#     def fit(self, kss_ids, y=None, **kwargs):
-#         self.transform_X(kss_ids, **kwargs)
-#         return self
-#
-#     # X was already transformed as a side-effect of the fit operation, so just re-use it, rather than do it again.
-#     def transform(self, kss_ids, y=None, **kwargs):
-#         """
-#         Takes a collection of KSS IDs and transforms them into the audio wav data they represent.
-#         This will be a **List** of normalized audio wav data
-#         (list because the wav data will be of different sizes)
-#         :param X: Collection of KSS IDs, example: `1_10004`
-#         :param y: Not used
-#         :return: self object with self.X set to the list of wavs
-#         """
-#         # If we already ran fit, we'll have the data transformed already
-#         if self.X is None:
-#             self.transform_X(kss_ids, **kwargs)
-#         return self
 
 
 class RMS(Transformer):
@@ -176,7 +79,7 @@ class SlidingWindow(Transformer):
     """
 
     # TODO: maybe allow padding, but passing the various pad arguments is kind of a pain
-    # TDOD: PADDING IS BROKEN -- INVESTIGATE AND FIX
+    # TODD: PADDING IS BROKEN -- INVESTIGATE AND FIX
     def __init__(self, window=1, offset_percent=0.0, pad_X=True, axis=0):
         super().__init__()
         self.log.setLevel('INFO')

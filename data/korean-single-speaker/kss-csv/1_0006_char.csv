@@ -1,0 +1,31 @@
+char,start,stop,kssid,audio
+0,0.0,0.25252,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ ᄀ,0.25252,0.28657,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅥ,0.28657,0.37028,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᄀ,0.37028,0.43464,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅵ,0.43464,0.53782,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᄃ,0.53782,0.57265,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅩ,0.57265,0.66397,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᄎ,0.66397,0.74011,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅡ,0.74011,0.81599,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᆨ,0.81599,0.92452,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᄒ,0.92452,0.95228,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅡ,0.95228,1.01447,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᄆ,1.01447,1.09836,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅧ,1.09836,1.30742,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᆫ,1.30742,1.40045,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+0,1.40045,1.61058,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ ᄂ,1.61058,1.6241,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅡ,1.6241,1.6761,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᄒ,1.6761,1.68763,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅡ,1.68763,1.78621,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᆫ,1.78621,1.88153,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᄐ,1.88153,1.91178,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅦ,1.91178,1.95191,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+아,1.95191,2.04139,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᆯ,2.04139,2.1342,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᆯ,2.1342,2.17472,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅧ,2.17472,2.3283,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᄌ,2.3283,2.40074,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+ᅯ,2.40074,2.63503,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav
+0,2.63503,2.66739,1_0006,./data/korean-single-speaker/kss/1/1_0006.wav

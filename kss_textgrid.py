@@ -35,7 +35,8 @@ class KssDf:
             self.csv_filenames[kss_type.value] = self.kss_filename(self.id, kss_type)
             self.csv_paths[kss_type.value] = f'{KssDf.CSV_DIR}/{self.csv_filenames[kss_type]}'
 
-    def kss_filename(self, kss_id, kss_enum):
+    @staticmethod
+    def kss_filename(kss_id, kss_enum):
         return f'{kss_id}_{kss_enum.value}.csv'
 
     def load_csv(self, type=KssDfType.SYL):

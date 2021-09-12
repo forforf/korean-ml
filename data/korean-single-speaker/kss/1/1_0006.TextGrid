@@ -1,0 +1,200 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 2.6673922902494334 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "char" 
+        xmin = 0 
+        xmax = 2.6673922902494334 
+        intervals: size = 30 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.2525170068027211 
+            text = "0" 
+        intervals [2]:
+            xmin = 0.2525170068027211 
+            xmax = 0.2865692296414677 
+            text = " ᄀ" 
+        intervals [3]:
+            xmin = 0.2865692296414677 
+            xmax = 0.3702785184587271 
+            text = "ᅥ" 
+        intervals [4]:
+            xmin = 0.3702785184587271 
+            xmax = 0.4346379214187306 
+            text = "ᄀ" 
+        intervals [5]:
+            xmin = 0.4346379214187306 
+            xmax = 0.5378236595170237 
+            text = "ᅵ" 
+        intervals [6]:
+            xmin = 0.5378236595170237 
+            xmax = 0.5726528157064834 
+            text = "ᄃ" 
+        intervals [7]:
+            xmin = 0.5726528157064834 
+            xmax = 0.6639735803820643 
+            text = "ᅩ" 
+        intervals [8]:
+            xmin = 0.6639735803820643 
+            xmax = 0.7401111747334409 
+            text = "ᄎ" 
+        intervals [9]:
+            xmin = 0.7401111747334409 
+            xmax = 0.8159944642084853 
+            text = "ᅡ" 
+        intervals [10]:
+            xmin = 0.8159944642084853 
+            xmax = 0.9245220848861382 
+            text = "ᆨ" 
+        intervals [11]:
+            xmin = 0.9245220848861382 
+            xmax = 0.952284964594375 
+            text = "ᄒ" 
+        intervals [12]:
+            xmin = 0.952284964594375 
+            xmax = 1.0144716250028967 
+            text = "ᅡ" 
+        intervals [13]:
+            xmin = 1.0144716250028967 
+            xmax = 1.0983585053612903 
+            text = "ᄆ" 
+        intervals [14]:
+            xmin = 1.0983585053612903 
+            xmax = 1.3074214025581645 
+            text = "ᅧ" 
+        intervals [15]:
+            xmin = 1.3074214025581645 
+            xmax = 1.400453514739229 
+            text = "ᆫ" 
+        intervals [16]:
+            xmin = 1.400453514739229 
+            xmax = 1.6105841031726975 
+            text = "0" 
+        intervals [17]:
+            xmin = 1.6105841031726975 
+            xmax = 1.6241012978411826 
+            text = " ᄂ" 
+        intervals [18]:
+            xmin = 1.6241012978411826 
+            xmax = 1.6761041608754836 
+            text = "ᅡ" 
+        intervals [19]:
+            xmin = 1.6761041608754836 
+            xmax = 1.687633244139545 
+            text = "ᄒ" 
+        intervals [20]:
+            xmin = 1.687633244139545 
+            xmax = 1.7862069060472698 
+            text = "ᅡ" 
+        intervals [21]:
+            xmin = 1.7862069060472698 
+            xmax = 1.8815257948951731 
+            text = "ᆫ" 
+        intervals [22]:
+            xmin = 1.8815257948951731 
+            xmax = 1.9117775459073652 
+            text = "ᄐ" 
+        intervals [23]:
+            xmin = 1.9117775459073652 
+            xmax = 1.9519052698322714 
+            text = "ᅦ" 
+        intervals [24]:
+            xmin = 1.9519052698322714 
+            xmax = 2.041393217971195 
+            text = "아" 
+        intervals [25]:
+            xmin = 2.041393217971195 
+            xmax = 2.134199132884386 
+            text = "ᆯ" 
+        intervals [26]:
+            xmin = 2.134199132884386 
+            xmax = 2.1747189656371875 
+            text = "ᆯ" 
+        intervals [27]:
+            xmin = 2.1747189656371875 
+            xmax = 2.3282966310601605 
+            text = "ᅧ" 
+        intervals [28]:
+            xmin = 2.3282966310601605 
+            xmax = 2.40074395054472 
+            text = "ᄌ" 
+        intervals [29]:
+            xmin = 2.40074395054472 
+            xmax = 2.6350278586005347 
+            text = "ᅯ" 
+        intervals [30]:
+            xmin = 2.6350278586005347 
+            xmax = 2.6673922902494334 
+            text = "0" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "syl" 
+        xmin = 0 
+        xmax = 2.6673922902494334 
+        intervals: size = 15 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.2525170068027211 
+            text = "0" 
+        intervals [2]:
+            xmin = 0.2525170068027211 
+            xmax = 0.3702785184587271 
+            text = " 거" 
+        intervals [3]:
+            xmin = 0.3702785184587271 
+            xmax = 0.5378236595170237 
+            text = "기" 
+        intervals [4]:
+            xmin = 0.5378236595170237 
+            xmax = 0.6639735803820643 
+            text = "도" 
+        intervals [5]:
+            xmin = 0.6639735803820643 
+            xmax = 0.9245220848861382 
+            text = "착" 
+        intervals [6]:
+            xmin = 0.9245220848861382 
+            xmax = 1.0144716250028967 
+            text = "하" 
+        intervals [7]:
+            xmin = 1.0144716250028967 
+            xmax = 1.400453514739229 
+            text = "면" 
+        intervals [8]:
+            xmin = 1.400453514739229 
+            xmax = 1.6105841031726975 
+            text = "0 " 
+        intervals [9]:
+            xmin = 1.6105841031726975 
+            xmax = 1.6761041608754836 
+            text = " 나" 
+        intervals [10]:
+            xmin = 1.6761041608754836 
+            xmax = 1.8815257948951731 
+            text = "한" 
+        intervals [11]:
+            xmin = 1.8815257948951731 
+            xmax = 1.9519052698322714 
+            text = "테" 
+        intervals [12]:
+            xmin = 1.9519052698322714 
+            xmax = 2.134199132884386 
+            text = "알" 
+        intervals [13]:
+            xmin = 2.134199132884386 
+            xmax = 2.3282966310601605 
+            text = "려" 
+        intervals [14]:
+            xmin = 2.3282966310601605 
+            xmax = 2.6350278586005347 
+            text = "줘" 
+        intervals [15]:
+            xmin = 2.6350278586005347 
+            xmax = 2.6673922902494334 
+            text = "0" 
