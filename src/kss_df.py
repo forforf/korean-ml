@@ -5,7 +5,7 @@ from enum import Enum
 import pandas as pd
 import textgrid
 
-from log import Log
+from src.log import Log
 
 
 class KssDfType(Enum):

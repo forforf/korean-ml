@@ -1,17 +1,16 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 from numpy import ndarray
 
-from audio import Audio
-# from transformers import SlidingWindow
+from src.audio import Audio
 from src.kss_df import KssDfType
 
 
 # TODO: This does not check that the start/stop columns are matching to the right audio file
 #       It assumes there is only 1 audio file for the entire df.
 class KssSpeech:
-    #TODO: Figure out whether we use kss_id and derive df and audio, or pass them in.
-    #TODO: Figure out if size and frame rate should be in constructor or not.
+    # TODO: Figure out whether we use kss_id and derive df and audio, or pass them in.
+    # TODO: Figure out if size and frame rate should be in constructor or not.
     # TODO: Deprecate is_speech (or speech_bools as they are the same)
     def __init__(self, df: pd.DataFrame, audio: Audio):
         self.df = df
@@ -30,7 +29,7 @@ class KssSpeech:
         are_same = [
             self.df.equals(o.df),
             self.audio == o.audio,
-            ]
+        ]
         return all(are_same)
 
     def __ne__(self, o):
@@ -38,7 +37,8 @@ class KssSpeech:
 
     # TODO: Figure out a way to make this more flexible and not tightly coupled to 'syl' column
     def speech_wav(self, size, rate, **kwargs):
-        assert KssDfType.SYL.value in self.df.columns, f'Dataframe must have column based on KssDfType.SYL: \'{KssDfType.SYL.value}\''
+        assert KssDfType.SYL.value in self.df.columns, (f'Dataframe must have column based on KssDfType.SYL:'
+                                                        f' \'{KssDfType.SYL.value}\'')
         self.df['value'] = np.where(self.df[KssDfType.SYL.value] == '0', False, True)
         return self._val_from_interval(size=size, frame_rate=rate, missing_val=False, **kwargs)
 

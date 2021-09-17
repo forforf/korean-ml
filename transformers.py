@@ -52,6 +52,7 @@ class RMS(Transformer):
         self.log.info(f'rms size: {len(x_)}, reduction factor {(len(x_)/hop_length)}')
         return librosa.util.normalize(x_)
 
+
 # TODO: Figure out how to make this work for X and y
 class IdentityTransformer(Transformer):
     def __init__(self):

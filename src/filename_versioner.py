@@ -1,8 +1,9 @@
 
 import glob
-import re
-import numpy as np
 import os
+import re
+
+import numpy as np
 
 
 # Rotates across version numbers
@@ -32,8 +33,7 @@ class FilenameVersioner:
     def fn_regex(self):
         return self.filename_regex(self.base_name, self.ext_name)
 
-    # TODO: Rename this method to something better as it's used to get the base name and version, not underlying data
-    def get_latest_data(self, search=None):
+    def get_base_and_version(self, search=None):
         search_str = search or f'{self.base_dir}/{self.filename_format()}'
         versions = glob.glob(search_str)
 
@@ -47,7 +47,7 @@ class FilenameVersioner:
         return m.group(0), m.group(2)
 
     def get_latest_path(self, search=None):
-        f, _ = self.get_latest_data(search=search)
+        f, _ = self.get_base_and_version(search=search)
         return f'{self.base_dir}/{f}' if f else None
 
     def increment_version_number(self, old_version):
@@ -59,7 +59,7 @@ class FilenameVersioner:
         # set version
         start_version = '0'
         if version is None:
-            old_fname, old_version = self.get_latest_data()
+            old_fname, old_version = self.get_base_and_version()
             if old_version:
                 version = self.increment_version_number(old_version)
             else:

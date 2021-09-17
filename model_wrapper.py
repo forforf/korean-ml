@@ -11,7 +11,14 @@ from filename_versioner import FilenameVersioner
 import joblib
 import keras.models
 
+# Reqs
+# save model with versioning
+# common transform (SlidingWindow), regardless of underlying model
+# fit/predict use transformed x,y
 
+# Nice to have
+# Unchanged models do not bump version
+# model parameters are exposed and can be used for things like GridSearch
 
 class Wrap(ABC):
     MODEL_DIR: Final[str] = './data/model'
@@ -79,7 +86,7 @@ class TrainingLoader:
         file_ext_tuple = (self.training_filename, TrainingLoader.FILE_EXT_NAME)
         self.fv_xy = FilenameVersioner(file_ext_tuple, base_dir = TrainingLoader.TRAINING_DATA_DIR)
 
-        xy_file_base, xy_vsn = self.fv_xy.get_latest_data()
+        xy_file_base, xy_vsn = self.fv_xy.get_base_and_version()
         self.training_version = xy_vsn
         self.xy_file = f'{self.fv_xy.base_dir}/{xy_file_base}'
 
