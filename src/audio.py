@@ -1,12 +1,15 @@
+import logging
+
 import math
 import librosa
 import numpy as np
-from log import Log
+from src.log import Log
 
 
 class Audio:
     def __init__(self, path, sr=None, n_fft=256, n_hops=4, n_mfcc=8):
         self.log = Log.set(self.__class__.__name__)
+        self.log.setLevel(logging.WARNING)
         self.n_fft = n_fft
         self.n_hops = n_hops
         self.hop_length = math.ceil(self.n_fft/self.n_hops)

@@ -61,13 +61,6 @@ def ticker_mse(a1, a2):
     return mse_wrapper(ev1, ev2)
 
 
-def bconvolve_score(a1, a2):
-    pn1 = np.where(a1>0, 1, -1)
-    pn2 = np.where(a2>0, 1, -1)
-    l = max(len(a1), len(a2))
-    return np.max(np.convolve(pn1, pn2, mode='valid')) / l
-
-
 def r2_score_wrapper(a1, a2):
     s = r2_score(a1.astype(int), a2.astype(int))
     return s if s >= 0 else 0

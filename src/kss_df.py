@@ -65,8 +65,8 @@ class KssDf:
 
         return df_dict
 
-    def tg_pred_path(self, data_version, tng_version):
-        return f'{self.TG_DIR}/{self.subdir_id}/{self.id}.pred.{data_version}.{tng_version}.TextGrid'
+    def tg_pred_path(self, version):
+        return f'{self.TG_DIR}/{self.subdir_id}/{self.id}.pred.{version}.TextGrid'
 
 
 def _validate_path(path):

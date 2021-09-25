@@ -1,6 +1,9 @@
 import numpy as np
 
-from src.model_wrapper import KerasTransform
+from src.model_wrapper import KerasTransform,
+
+# Loader
+# Given a full path, load model and transformer
 
 
 class TransformerExample:
@@ -48,3 +51,4 @@ class TestKerasTransform:
         expected_y = y + transformer.adder
         np.testing.assert_array_equal(X_t, expected_X)
         np.testing.assert_array_equal(y_t, expected_y)
+

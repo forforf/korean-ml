@@ -11,6 +11,12 @@ purpose built for PyCharm created Jupyter notebooks. It might not work well for 
 
 The templating itself is pretty user-friendly (IMO), but the generation process is somewhat manual.
 
+## Just tell me how to generate the templates
+
+1. Run all cells in `template/model-generator.ipynb` to generate the templates
+2. Run all cells in `template/model-file-mover.ipynb` to move generated templates to the correct directory
+
+
 ## Templating
 
 The README in [nbtplt](https://github.com/forforf/pycharm-jupyter-templates) explains the general idea.

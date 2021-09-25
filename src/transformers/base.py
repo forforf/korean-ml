@@ -1,7 +1,7 @@
 # noinspection PyProtectedMember
 from sklearn.base import BaseEstimator, TransformerMixin
 
-from log import Log
+from src.log import Log
 
 
 # TODO: The .transform method should technically return X, not self - but I need y transforms too.

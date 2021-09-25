@@ -1,5 +1,7 @@
 import logging
 
+DEFAULT_LEVEL = logging.INFO
+
 class Log:
     @staticmethod
     def set(log_name):
@@ -10,5 +12,5 @@ class Log:
         c_format = logging.Formatter('%(name)s[%(levelname)s]: %(message)s')
         c_handler.setFormatter(c_format)
         logger.addHandler(c_handler)
-        logger.setLevel(logging.DEBUG)
+        logger.setLevel(DEFAULT_LEVEL)
         return logger
