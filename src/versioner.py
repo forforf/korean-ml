@@ -56,10 +56,15 @@ class FileVersioner(Versioner):
         versioned_entries = self.find_all()
         return [os.path.join(self.dir, entry) for entry in versioned_entries]
 
-    def get_current_path(self):
+    # Gets the path to the latest *saved* version
+    def get_saved_path(self):
         names = self.find_all()
         entry, _ = self.finder.get_latest_name_and_version(names)
         return os.path.join(self.dir, entry)
+
+    # Create the file path using the current state
+    def build_path(self):
+        return os.path.join(self.dir, self.name())
 
 
 

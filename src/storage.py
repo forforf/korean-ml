@@ -38,10 +38,10 @@ def might_have_np_inside(a, b):
         if isinstance(a, np.ndarray):
             return np.array_equal(a, b)
         if isinstance(a, dict):
-            return all([maybe_np_eq(v, b[k]) for k, v in a.items()])
+            return all([generic_eq(v, b[k]) for k, v in a.items()])
         if isinstance(a, Iterable):
             for i, el in enumerate(a):
-                if not maybe_np_eq(el, b[i]):
+                if not generic_eq(el, b[i]):
                     return False
             # l = [maybe_np_eq(aa, bb) for aa, bb in zip(a, b)]
             # return all(l)
@@ -133,14 +133,16 @@ class FileVersionedStorage(ABC):
         self.ext = ext
         self.fv = FileVersioner(self.dir, self.base, self.ext)
 
-    def load(self):
-        path = self.fv.get_current_path()
+    def load(self, update=True):
+        path = self.fv.get_saved_path()
         # FileStorage picks correct loader based on extension
-        self.data = FileStorage().load(path)
-        return self.data
+        loaded_data = FileStorage().load(path)
+        if update:
+            self.data = loaded_data
+        return loaded_data
 
     def save(self):
-        path = self.fv.get_current_path()
+        path = self.fv.build_path()
         FileStorage().save(self.data, path)
         self.log.info(f'Saved data to {path}')
 
@@ -155,9 +157,11 @@ class FileVersionedStorage(ABC):
             self.bump_version_and_save()
 
     def is_saved(self):
+        orig_data = self.data
         try:
-            saved_data = self.load()
+            # self.data is updated here as well
+            saved_data = self.load(update=False)
         except FileNotFoundError:
             return False
 
-        return generic_eq(self.data, saved_data)
+        return generic_eq(orig_data, saved_data)
