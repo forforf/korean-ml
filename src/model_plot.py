@@ -24,7 +24,10 @@ class ModelPlot:
     # noinspection DuplicatedCode
     @staticmethod
     def plot(X, y, y_pred, x_rms, sliding_window_transformer):
-        x_sw = sliding_window_transformer.transform(X).astype(float)
+
+        # Reshape to 2d in case the transformer is not doing a sliding window
+        # This is equivalent to a sliding window with a window of 1
+        x_sw = sliding_window_transformer.transform(X).astype(float).reshape(X.shape[0],-1)
 
         # cast values to float so we have a common type to deal with
         X = X.astype(float)

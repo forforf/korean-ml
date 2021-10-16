@@ -104,5 +104,11 @@ The initial use case was to predict speech vs silence using from the audio wavef
 Wanted to be able to compare current model to older versions (version control such as git was not a good solution here 
 as I wanted the older and newer versions to co-exist for direct comparison).
 
+## TODOs
+
+* Move the TODOs to github issues
+* Fix existing tests
+* Add more tests
+
 
 

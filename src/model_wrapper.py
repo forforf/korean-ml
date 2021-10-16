@@ -5,9 +5,11 @@ import joblib
 import keras.models
 import numpy as np
 from numpy.typing import ArrayLike
+from sklearn.base import BaseEstimator
 
 from src.log import Log
 from src.storage import FileStorage, KERAS as KERAS_EXT, SKLEARN as SKLEARN_EXT
+from src.transformers.base import NoOpTransformer
 import os
 import shutil
 from src.versioner import FileVersioner, VersionFinder
@@ -62,7 +64,7 @@ class WrapperStore:
         self.transformer_path = transformer_path
 
 
-class ModelWrapper(ABC):
+class ModelWrapper(ABC, BaseEstimator):
     KERAS_MODULE_ROOT = 'keras'
     SKLEARN_MODULE_ROOT = 'sklearn'
     TRANSFORMER_MODULE_ROOT = 'src'
@@ -95,11 +97,12 @@ class ModelWrapper(ABC):
         self.log = Log.set(self.__class__.__name__)
         self.save_dir = save_dir
         self.id = model_id
+        self.model_id = model_id # Maybe for SKLearn compatibility?
         self.model = model  # or model_fetcher if model is None (to allow for saving/loading non-serializable models)
         self.ext = self._get_ext(model)
         self.transformer_id = f'{model_id}-transformer'
-        self.transformer = transformer
-        self.transformer_ext = self._get_ext(transformer)
+        self.transformer = transformer or NoOpTransformer()
+        self.transformer_ext = self._get_ext(self.transformer)
 
     def _get_ext(self, model):
         ext_key = self._get_ext_map_key_from_module(model.__module__)
@@ -131,7 +134,6 @@ class ModelWrapper(ABC):
         return os.path.join(self.save_dir, fname)
 
     def _get_and_bump_version(self, id_, ext):
-        # ext = self._get_ext(model)
         fname, vsn = self._find_latest_version(id_, ext)
         full_base, _ = os.path.splitext(fname)
         base = FileVersioner.unversioned_base(full_base)
@@ -149,7 +151,13 @@ class ModelWrapper(ABC):
         """
         if y is None:
             y = np.zeros(len(X))
-        x_txfm = self.transformer.fit_transform(X, y)
+        # if self.transformer is not None:
+        #     x_txfm = self.transformer.fit_transform(X, y)
+        #     self.log.info(f'transformed X, y shapes: {self.transformer.X.shape}, {self.transformer.y.shape}')
+        # else:
+        #     x_txfm = X
+        #     self.log.info(f'transformed X, y shapes: {x_txfm.shape}, {y.shape}')
+        x_txfm = self.transformer.fit(X, y).transform(X, y)
         self.log.info(f'transformed X, y shapes: {self.transformer.X.shape}, {self.transformer.y.shape}')
         return x_txfm, y
 
@@ -189,6 +197,13 @@ class ModelWrapper(ABC):
             [self._delete_path(path) for path in paths]
 
 
+class ModelWrapperRegressor(ModelWrapper):
+
+    def __init__(self, model_id, model, transformer=None, save_dir='.'):
+        super().__init__(model_id, model, transformer=transformer, save_dir=save_dir)
+        self._estimator_type = "regressor"
+
+
 class KerasModelWrapper(ModelWrapper):
 
     def transform(self, X, y):
@@ -200,7 +215,16 @@ class KerasModelWrapper(ModelWrapper):
         """
         if y is None:
             y = np.zeros(len(X))
-        self.transformer.fit_transform(X, y)
+        # if self.transformer is not None:
+        #     self.transformer.fit_transform(X, y)
+        #     y_t = self.transformer.y.astype('float32')
+        #     X_t = self.transformer.X.reshape(self.transformer.X.shape[0], self.transformer.X.shape[1], 1)
+        #     self.log.info(f'transformed X, y shapes: {self.transformer.X.shape}, {self.transformer.y.shape}')
+        # else:
+        #     y_t = y.astype('float32')
+        #     X_t = X.reshape(X.shape[0], X.shape[1], 1)
+        #     self.log.info(f'No transformer, so X, y just reshaped: {X.shape}, {y.shape}')
+        self.transformer.fit(X, y).transform(X, y)
         y_t = self.transformer.y.astype('float32')
         X_t = self.transformer.X.reshape(self.transformer.X.shape[0], self.transformer.X.shape[1], 1)
         self.log.info(f'transformed X, y shapes: {self.transformer.X.shape}, {self.transformer.y.shape}')

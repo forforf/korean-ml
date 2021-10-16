@@ -14,15 +14,32 @@ class Transformer(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.log = Log.set(self.__class__.__name__)
 
-
-    # def get_parameters(self):
-    #     return vars(self)
-
     def fit(self, X, y=None, **kwargs):
-        # TODO: use super fit
+        super().fit(X, y)
         return self
 
     def transform(self, X, y=None, **kwargs):
         self.log.warning('transform() from the base Transformer class called. This does nothing.')
         # TODO: use super transform
         return X.squeeze()
+
+
+class NoOpTransformer(Transformer):
+
+    def __init__(self):
+        super().__init__()
+        self.X = None
+        self.y = None
+
+    def fit(self, X, y=None, **kwargs):
+        self.X = X
+        if y is not None:
+            self.y = y
+        return self
+
+    def transform(self, X, y=None, **kwargs):
+        self.log.warning('transform() from the base Transformer class called. This does nothing.')
+        return X.squeeze()
+
+    def __eq__(self, o):
+        return type(self) == type(o)
