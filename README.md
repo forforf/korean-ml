@@ -15,6 +15,9 @@ file format (a "TextGrid" file).
 
 ### Phase 1
 
+[KSS Event Detection from Audio RMS](kss-event-detection-rms)
+[Workspace README](kss-event-detection-rms/_README.md)
+
 Generating TextGrid files through Praat is a manual process. As a first stage in automating this process, a seed group 
 of 6 audio files was manually segmented and then used  as the training/test set to identify speech vs non-speech 
 segments of the audio file and to programmatically generate base TextGrid files. This step would reduce the amount of
@@ -44,6 +47,7 @@ The predictions are okay, but not yet high quality enough to move to Phase 2. Th
 size is still relatively small (6-7 audio files). Hopefully once ~20 files have been added the predictions will have 
 improved enough (fingers crossed).
 
+
 ### Phase 2
 Once the speech/no-speech analysis is working well enough (i.e., the silence predictions are accurate enough) 
 convert to predicting characters or syllables (depending on which works better). The general workflow would remain the
@@ -55,12 +59,9 @@ same.
 
 Some statistics and analysis of the KSS transcription data.
 
-## [KSS Event Detection from Audio RMS](kss-event-detection-rms)
 
 
-Workspace for code and notebooks for predicting speech/no speech from the KSS Audio files and transcription data.
 
-[Workspace README](kss-event-detection-rms/_README.md)
 
 
 
