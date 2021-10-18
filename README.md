@@ -16,6 +16,7 @@ file format (a "TextGrid" file).
 ### Phase 1
 
 [KSS Event Detection from Audio RMS](kss-event-detection-rms)
+
 [Workspace README](kss-event-detection-rms/_README.md)
 
 Generating TextGrid files through Praat is a manual process. As a first stage in automating this process, a seed group 
